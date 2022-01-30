@@ -1,7 +1,7 @@
-FROM alpine:latest
+#FROM alpine:latest
 
 # Build certificates
-RUN make
+#RUN make
 
 FROM nginx:1.21.5
 
@@ -10,7 +10,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY static-html /usr/share/nginx/html
 
 # Copy certificates from first stage
-COPY --from=0 certificate.pem key.pem DoDRoots.crt /etc/nginx/
+COPY certificate.pem key.pem DoDRoots.crt /etc/nginx/
+#COPY --from=0 certificate.pem key.pem DoDRoots.crt /etc/nginx/
 
 EXPOSE 443/tcp
 
