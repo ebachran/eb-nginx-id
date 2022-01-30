@@ -14,6 +14,6 @@ COPY server.crt server.key DoDRoots.crt /etc/nginx/
 #COPY certificate.pem key.pem DoDRoots.crt /etc/nginx/
 #COPY --from=0 certificate.pem key.pem DoDRoots.crt /etc/nginx/
 
-EXPOSE 443/tcp
+EXPOSE $PORT/tcp
 
 CMD /bin/bash -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
