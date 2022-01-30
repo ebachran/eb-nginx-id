@@ -1,9 +1,9 @@
 error_log stderr info;
 
 server {
-  listen 443 ssl http2 $PORT default_server;
+  listen $PORT ssl http2 default_server;
 
-  server_name locatlhost;
+  server_name localhost;
 
   #ssl_certificate /etc/nginx/certificate.pem;
   #ssl_certificate_key /etc/nginx/key.pem;
