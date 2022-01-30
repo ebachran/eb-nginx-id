@@ -1,26 +1,28 @@
 #error_log stderr info;
 
 server {
-  listen $PORT ssl default_server;
+  listen $PORT ssl http2;
   #listen $PORT ssl http2 default_server;
 
-  #server_name localhost;
+  server_name eb-nginx-id.herokuapp.com;
 
+  # SSL/TLS configs
+  ssl on;
   ssl_certificate /etc/nginx/server.crt;
   ssl_certificate_key /etc/nginx/server.key;
-  #ssl_protocols TLSv1.2 TLSv1.3;
-  #ssl_ciphers HIGH:!aNULL:!MD5;
-  #ssl_prefer_server_ciphers on;
+  ssl_protocols TLSv1.2 TLSv1.3;
+  ssl_ciphers HIGH:!aNULL:!MD5;
+  ssl_prefer_server_ciphers on;
 
-  #ssl_verify_client on;
-  #ssl_verify_depth 4; # Allow intermediate CAs
-  #ssl_client_certificate /etc/nginx/DoDRoots.crt;
+  ssl_verify_client on;
+  ssl_verify_depth 4; # Allow intermediate CAs
+  ssl_client_certificate /etc/nginx/DoDRoots.crt;
 
-  #add_header Strict-Transport-Security max-age=15768000;
+  add_header Strict-Transport-Security max-age=15768000;
 
   # Inform the proxyed app which user had connected to this TLS endpoint
-  #add_header X-Subject-DN $ssl_client_s_dn;
-  #add_header X-Client-Verified $ssl_client_verify;
+  add_header X-Subject-DN $ssl_client_s_dn;
+  add_header X-Client-Verified $ssl_client_verify;
   
   location / {
     root   /usr/share/nginx/html;
