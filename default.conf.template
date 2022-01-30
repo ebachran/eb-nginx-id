@@ -1,6 +1,24 @@
 server {
   listen $PORT default_server;
 
+  server_name locatlhost;
+
+  ssl_certificate     /etc/nginx/certificate.pem
+  ssl_certificate_key /etc/nginx/key.pem
+  ssl_protocols       TLSv1.2 TLSv1.3;
+  ssl_ciphers         HIGH:!aNULL:!MD5;
+  ssl_prefer_server_ciphers on;
+
+  ssl_verify_client on;
+  ssl_verify_depth 4; # Allow intermediate CAs
+  ssl_client_certificate /etc/nginx/DoDRoots.crt;
+
+  add_header Strict-Transport-Security max-age=15768000;
+
+  # Inform the proxyed app which user had connected to this TLS endpoint
+  add_header X-Subject-DN $ssl_client_s_dn;
+  add_header X-Client-Verified $ssl_client_verify;
+  
   location / {
     root   /usr/share/nginx/html;
     index  index.html index.htm;
